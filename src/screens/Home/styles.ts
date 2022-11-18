@@ -14,8 +14,8 @@ export const HeaderContainer = styled.View`
   justify-content: space-between;
   align-items: center;
   background-color: ${({ theme }) => theme.colors.gray[600]};
-  padding-left: ${RFPercentage(4)}px;
-  padding-right: ${RFPercentage(4)}px;
+  padding-left: ${RFPercentage(2)}px;
+  padding-right: ${RFPercentage(2)}px;
   padding-top: ${RFPercentage(10)}px;
   padding-bottom: ${RFPercentage(5)}px;
 `;
@@ -25,13 +25,15 @@ export const Logout = styled(TouchableOpacity)`
 `;
 
 export const BodyContainer = styled.View`
-  padding: ${RFPercentage(5)}px ${RFPercentage(4)}px;
+  flex: 1;
+  padding: ${RFPercentage(2)}px ${RFPercentage(2)}px;
 `;
 
 export const TopWrapper = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  margin-top: ${RFPercentage(3)}px;
 `;
 
 export const Title = styled.Text`
@@ -48,4 +50,18 @@ export const ButtonWrapper = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+`;
+
+export const EmptyWrapper = styled.View`
+  align-items: center;
+  justify-content: center;
+  margin-top: ${RFPercentage(2)}px;
+`;
+
+export const EmptyText = styled.Text`
+  color: ${({theme}) => theme.colors.gray[300]};
+  font-size: ${RFValue(18)}px;
+  margin-top: ${RFPercentage(2)}px;
+  line-height: ${RFPercentage(4)}px;
+  text-align: center;
 `;
