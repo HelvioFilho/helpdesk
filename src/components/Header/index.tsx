@@ -1,11 +1,30 @@
 import React from 'react';
+import { CaretLeft } from 'phosphor-react-native';
+import { useTheme } from 'styled-components';
 
-import { Container } from './styles';
+import { Container, Heading, Icon } from './styles';
 
-export function Header(){
+interface HeaderProps {
+  title: string;
+  goBack: () => void;
+}
+
+export function Header({ title, goBack }: HeaderProps) {
+  const { colors } = useTheme();
+
   return (
     <Container>
-      
+      <Icon
+        onPress={goBack}
+      >
+        <CaretLeft
+          color={colors.gray[200]}
+          size={24}
+        />
+      </Icon>
+      <Heading>
+        {title}
+      </Heading>
     </Container>
   );
 }
