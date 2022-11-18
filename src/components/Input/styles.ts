@@ -8,14 +8,13 @@ interface InputWrapperProps {
 
 export const Container = styled.View`
   width: 100%;
-  justify-content: center;
-  align-items: center;
+  align-self: center;
 `;
 
 export const InputWrapper = styled.View<InputWrapperProps>`
   flex-direction: row;
   align-items: center;
-  width: 85%;
+  width: 95%;
   border-radius: 5px;
   padding: 15px;
   margin-bottom: ${({marginBottom}) => marginBottom}px;

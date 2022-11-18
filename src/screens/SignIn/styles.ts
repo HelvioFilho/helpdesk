@@ -5,8 +5,8 @@ export const Container = styled.View`
   flex: 1;
   align-items: center;
   background-color: ${({theme}) => theme.colors.gray[600]};
-  padding-left: 8px;
-  padding-right: 8px;
+  padding-left: 20px;
+  padding-right: 20px;
   padding-top: ${RFPercentage(14)}px;
 `;
 
