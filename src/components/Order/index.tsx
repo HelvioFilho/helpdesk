@@ -4,14 +4,14 @@ import { TouchableOpacityProps } from 'react-native';
 import { useTheme } from 'styled-components';
 import { OrderProps } from '../../screens/Home';
 
-import { 
+import {
   Box,
   Circle,
-  Container, 
-  Data, 
-  Patrimony, 
-  Wrapper, 
-  WrapperClock, 
+  Container,
+  Data,
+  Patrimony,
+  Wrapper,
+  WrapperClock,
   WrapperContent
 } from './styles';
 
