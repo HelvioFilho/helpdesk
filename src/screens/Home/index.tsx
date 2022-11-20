@@ -21,13 +21,13 @@ import {
   TopWrapper
 } from './styles';
 
-import { Filter } from '../../components/Filter';
-import { dateFormat } from '../../services/Utils/firestoreDateFormat';
-import { Order } from '../../components/Order';
-import { Button } from '../../components/Button';
-import { appStore } from '../../services/Store';
 import { useNavigation } from '@react-navigation/native';
+import { Button } from '../../components/Button';
+import { Filter } from '../../components/Filter';
 import { Loading } from '../../components/Loading';
+import { Order } from '../../components/Order';
+import { appStore } from '../../services/Store';
+import { dateFormat } from '../../services/Utils/firestoreDateFormat';
 
 export interface OrderProps {
   id: string;
@@ -63,10 +63,11 @@ export function Home() {
       .catch(error => {
         console.log(error);
         return Alert.alert('Aviso', 'Não foi possível sair.');
-      })
+      });
   }
 
   function handleOpenDetails(orderId: string) {
+    navigate('details', { orderId });
   }
 
   function handleNewOrder() {
@@ -76,28 +77,26 @@ export function Home() {
   useEffect(() => {
     if (!!data) {
       setIsLoading(true);
-      let operator = '==' as WhereFilterOp;
+      let doc = 'customer';
       let key = data.email;
-
       if (data.type === 'technician') {
-        operator = '!=';
-        key = data.email;
+        doc = 'status';
+        key = statusSelected;
       }
 
       const subscriber = firestore()
         .collection('orders')
         .where('status', '==', statusSelected)
-        .where('customer', operator, key)
+        .where(doc, '==', key)
         .onSnapshot(snapshot => {
           let dataOrder = [] as OrderProps[];
           if (snapshot) {
             dataOrder = snapshot.docs.map(doc => {
-              const { patrimony, description, status, created_at } = doc.data();
+              const { patrimony, status, created_at } = doc.data();
 
               return {
                 id: doc.id,
                 patrimony,
-                description,
                 status,
                 when: dateFormat(created_at),
               }
@@ -110,17 +109,6 @@ export function Home() {
 
       return subscriber;
     }
-
-    // if (statusSelected === 'open') {
-    //   setOrders([{
-    //     id: "29304029",
-    //     patrimony: "8394329",
-    //     status: "open",
-    //     when: "21/08/2022 às 22:23:43",
-    //   }]);
-    // } else {
-    //   setOrders([]);
-    // }
   }, [statusSelected, data]);
 
   return (

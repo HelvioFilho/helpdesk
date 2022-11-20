@@ -11,30 +11,42 @@ import { AppRoutes } from "./app.routes";
 export function Routes() {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<FirebaseAuthTypes.User>();
+  const [transition, setTransition] = useState(false);
+
   const { setData } = appStore();
+
+  useEffect(() => {
+    if (user !== null) {
+      firestore()
+        .collection('controller')
+        .where('customer', '==', user.email)
+        .get()
+        .then(response => {
+          const data = response.docs.map(doc => {
+            const { customer, type } = doc.data();
+            return {
+              email: customer,
+              type
+            }
+          });
+          setData(data[0]);
+        })
+        .finally(() => {
+          setTransition(true);
+        })
+    }else{
+      setTransition(false);
+    }
+  }, [user]);
+
   useEffect(() => {
     const subscriber = auth()
       .onAuthStateChanged(response => {
-        firestore()
-          .collection('controller')
-          .where('customer', '==', response.email)
-          .get()
-          .then(response => {
-            const data = response.docs.map(doc => {
-              const { customer, type } = doc.data();
-              return {
-                email: customer,
-                type
-              }
-            });
-            setData(data[0]);
-          })
-          .finally(() => {
-            setUser(response);
-            setLoading(false);
-          })
+        setUser(response);
+        setLoading(false);
       });
 
+    return subscriber;
   }, []);
 
   if (loading) {
@@ -43,7 +55,7 @@ export function Routes() {
 
   return (
     <NavigationContainer>
-      {user ? <AppRoutes /> : <SignIn />}
+      {transition ? <AppRoutes /> : <SignIn />}
     </NavigationContainer>
   )
 }
