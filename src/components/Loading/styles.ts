@@ -6,7 +6,5 @@ interface LoadProps {
 }
 
 export const Load = styled(ActivityIndicator) <LoadProps>`
-  flex: 1;
-  align-self: center;
   color: ${({ color }) => color};
 `;

@@ -1,4 +1,5 @@
 import React from 'react';
+import { View } from 'react-native';
 import { useTheme } from 'styled-components';
 
 import { Load } from './styles';
@@ -13,9 +14,11 @@ export function Loading({ size = 26, color }: LoadingProps) {
   const { colors } = useTheme();
 
   return (
-    <Load
-      color={color ? color : colors.secondary[700]}
-      size={size}
-    />
+    <View>
+      <Load
+        color={color ? color : colors.secondary[700]}
+        size={size}
+      />
+    </View>
   );
 }
