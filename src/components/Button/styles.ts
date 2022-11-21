@@ -4,7 +4,7 @@ import styled from 'styled-components/native';
 export const Container = styled.TouchableOpacity`
   justify-content: center;
   align-items: center;
-  width: 100%;
+  width: 105%;
   border-radius: 5px;
   background-color: ${({theme}) => theme.colors.green[700]};
 `;
