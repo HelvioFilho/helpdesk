@@ -36,6 +36,7 @@ export function Register() {
         description,
         customer: data.email,
         status: 'open',
+        new_order: 1,
         created_at: firestore.FieldValue.serverTimestamp(),
       })
       .then(() => {

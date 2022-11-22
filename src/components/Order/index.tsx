@@ -1,8 +1,9 @@
-import { CircleWavyCheck, ClockAfternoon, Hourglass } from 'phosphor-react-native';
 import React from 'react';
+import { CircleWavyCheck, ClockAfternoon, Hourglass } from 'phosphor-react-native';
 import { TouchableOpacityProps } from 'react-native';
 import { useTheme } from 'styled-components';
 import { OrderProps } from '../../screens/Home';
+import { appStore } from '../../services/Store';
 
 import {
   Box,
@@ -10,6 +11,8 @@ import {
   Container,
   Data,
   Patrimony,
+  Pill,
+  TextPill,
   Wrapper,
   WrapperClock,
   WrapperContent
@@ -21,13 +24,31 @@ interface ListOrderProps extends TouchableOpacityProps {
 
 export function Order({ data, ...rest }: ListOrderProps) {
   const { colors } = useTheme();
+  const { data: storeData } = appStore();
   const statusColor = data.status === 'open' ? colors.secondary[700] : colors.green[300];
-
+  let isPill = false;
+  if (data.new_order) {
+    if (data.status === 'open' && storeData.type === 'technician') {
+      isPill = true;
+    } else if (data.status !== 'open' && storeData.type === 'customer') {
+      isPill = true;
+    }
+  }
   return (
     <Container
       {...rest}
     >
       <Wrapper>
+        {
+          isPill &&
+          <Pill
+            color={statusColor}
+          >
+            <TextPill>
+              Novo
+            </TextPill>
+          </Pill>
+        }
         <Box
           color={statusColor}
         />

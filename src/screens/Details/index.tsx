@@ -30,6 +30,7 @@ interface OrderFirestoreProps {
   patrimony: string;
   description: string;
   status: 'open' | 'closed';
+  new_order: number;
   solution?: string;
   created_at: FirebaseFirestoreTypes.Timestamp;
   closed_at?: FirebaseFirestoreTypes.Timestamp
@@ -70,6 +71,29 @@ export function Details() {
       })
   }
 
+  function VerifyNewOrder() {
+    if (order.new_order === 1) {
+      let isVerify = false;
+      if (order.status === 'open' && data.type === 'technician') {
+        isVerify = true;
+      } else if (order.status !== 'open' && data.type === 'customer') {
+        isVerify = true;
+      }
+
+      if (isVerify) {
+        firestore()
+          .collection<OrderFirestoreProps>('orders')
+          .doc(orderId)
+          .update({
+            new_order: 0
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    }
+  }
+
   useEffect(() => {
     firestore()
       .collection<OrderFirestoreProps>('orders')
@@ -82,6 +106,7 @@ export function Details() {
           status,
           created_at,
           closed_at,
+          new_order,
           solution
         } = doc.data();
 
@@ -93,13 +118,20 @@ export function Details() {
           description,
           status,
           solution,
+          new_order,
           when: dateFormat(created_at),
           closed
         });
       })
       .catch((error) => console.log(error))
-      .finally(() => setIsLoading(false));
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, []);
+
+  useEffect(() => {
+    VerifyNewOrder();
+  }, [order]);
 
   return (
     <Container>
@@ -140,10 +172,10 @@ export function Details() {
               <CardDetails
                 title="solução"
                 description={
-                  !!order.solution ? 
-                  order.solution : 
-                  data.type === 'customer' ?
-                  'Aguardando solução!': ''}
+                  !!order.solution ?
+                    order.solution :
+                    data.type === 'customer' ?
+                      'Aguardando solução!' : ''}
                 icon={CircleWavyCheck}
                 footer={order.closed && `Encerrado em ${order.closed}`}
               >

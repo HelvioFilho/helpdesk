@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ChatTeardropText, SignOut } from 'phosphor-react-native';
-import { Alert, FlatList } from 'react-native';
+import { Alert, FlatList, View } from 'react-native';
 import { useTheme } from 'styled-components';
 
 import Logo from '../../assets/logo_mini.svg';
@@ -33,20 +33,9 @@ export interface OrderProps {
   id: string;
   patrimony: string;
   when: string;
+  new_order: number;
   status: 'open' | 'closed';
 }
-
-type WhereFilterOp =
-  | '<'
-  | '<='
-  | '=='
-  | '>'
-  | '>='
-  | '!='
-  | 'array-contains'
-  | 'array-contains-any'
-  | 'in'
-  | 'not-in';
 
 export function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -92,13 +81,20 @@ export function Home() {
           let dataOrder = [] as OrderProps[];
           if (snapshot) {
             dataOrder = snapshot.docs.map(doc => {
-              const { patrimony, status, created_at } = doc.data();
+              const { patrimony, status, new_order, created_at, closed_at } = doc.data();
+              let date = '';
+              if(status === 'open'){
+                date = dateFormat(created_at);
+              }else{
+                date = dateFormat(closed_at);
+              }
 
               return {
                 id: doc.id,
                 patrimony,
                 status,
-                when: dateFormat(created_at),
+                new_order,
+                when: date,
               }
             });
           }
@@ -148,7 +144,9 @@ export function Home() {
         </ButtonWrapper>
         {
           isLoading ?
-            <Loading /> :
+            <View style={{ flex: 1, justifyContent: 'center' }}>
+              <Loading />
+            </View> :
             <FlatList
               data={orders}
               keyExtractor={(item) => item.id}

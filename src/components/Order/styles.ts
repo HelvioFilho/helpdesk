@@ -1,6 +1,6 @@
+import styled from 'styled-components/native';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import { TouchableOpacity } from 'react-native';
-import styled from 'styled-components/native';
 
 interface BoxProps {
   color: string;
@@ -9,13 +9,28 @@ interface BoxProps {
 export const Container = styled(TouchableOpacity)``;
 
 export const Wrapper = styled.View`
+  position: relative;
   background-color: ${({ theme }) => theme.colors.gray[600]};
   flex-direction: row;
-  margin-bottom: 4px;
+  margin-bottom: 10px;
   align-items: center;
   justify-content: space-between;
   border-radius: 6px;
   overflow: hidden;
+`;
+
+export const Pill = styled.View<BoxProps>`
+  position: absolute;
+  top: 0px;
+  right: ${RFPercentage(13)}px;
+  padding: 3px 10px;
+  border-radius: 15px;
+  background-color: ${({ color }) => color};
+`;
+
+export const TextPill = styled.Text`
+  font-size: ${RFValue(10)}px;
+  color: ${({ theme }) => theme.colors.white};
 `;
 
 export const Box = styled.View<BoxProps>`
@@ -30,7 +45,7 @@ export const WrapperContent = styled.View`
 `;
 
 export const Patrimony = styled.Text`
-  color: ${({theme}) => theme.colors.white};
+  color: ${({ theme }) => theme.colors.white};
   font-size: ${RFValue(13)}px;
 `;
 
@@ -41,7 +56,7 @@ export const WrapperClock = styled.View`
 `;
 
 export const Data = styled.Text`
-  color: ${({theme}) => theme.colors.gray[200]};
+  color: ${({ theme }) => theme.colors.gray[200]};
   font-size: ${RFValue(10)}px;
   margin-left: 4px;
 `;

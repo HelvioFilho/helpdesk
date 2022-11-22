@@ -16,7 +16,8 @@ export function Routes() {
   const { setData } = appStore();
 
   useEffect(() => {
-    if (user !== null) {
+    console.log(user);
+    if (!!user) {
       firestore()
         .collection('controller')
         .where('customer', '==', user.email)
@@ -45,7 +46,7 @@ export function Routes() {
         setUser(response);
         setLoading(false);
       });
-
+    
     return subscriber;
   }, []);
 
