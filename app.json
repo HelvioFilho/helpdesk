@@ -3,19 +3,20 @@
     "name": "HelpDesk",
     "slug": "helpdesk",
     "version": "1.0.0",
+    "orientation": "portrait",
     "assetBundlePatterns": [
       "**/*"
     ],
-    "plugins": [
-      "@react-native-firebase/app"
-    ],
+    "splash": {
+      "image": "./src/assets/splash.png",
+      "backgroundColor": "#202024",
+      "resizeMode": "contain"
+    },
     "android": {
-      "package": "com.helpdesk",
-      "googleServicesFile": "./google-services.json"
+      "package": "com.helpdesk"
     },
     "ios": {
-      "bundleIdentifier": "com.helpdesk",
-      "googleServicesFile": "./GoogleService-Info.plist"
+      "bundleIdentifier": "com.helpdesk"
     }
   }
 }

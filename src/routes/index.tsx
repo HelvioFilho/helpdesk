@@ -16,7 +16,6 @@ export function Routes() {
   const { setData } = appStore();
 
   useEffect(() => {
-    console.log(user);
     if (!!user) {
       firestore()
         .collection('controller')
