@@ -33,7 +33,7 @@ This project was developed using the following technologies:
 - [React Native](https://reactnative.dev/)
 - [Expo bare workflow](https://expo.io/)
 - [TypeScript](https://www.typescriptlang.org/)
-- [Firebase](httsp://firebase.google.com)
+- [Firebase](https://firebase.google.com)
 
 ## Getting started
 
