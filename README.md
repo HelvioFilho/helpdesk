@@ -12,7 +12,7 @@
 <br>
 
 <p align="center">
-  <img height="500" alt="application screens" src=".github/demo.git">
+  <img height="500" alt="application demo" src=".github/demo.gif">
 </p>
 
 ---
